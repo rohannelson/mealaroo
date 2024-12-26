@@ -12,7 +12,8 @@
   },
   "action": {
     "default_title": "Scrape Page",
-    "default_icon": "icons/kangaroo.svg"
+    "default_icon": "icons/kangaroo.svg",
+    "default_popup": "index.html"
   },
   "content_scripts": [
     {

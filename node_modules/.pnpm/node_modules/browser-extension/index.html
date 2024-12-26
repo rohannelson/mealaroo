@@ -4,9 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Mealaroo</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <h1>Mealaroo</h1>
+      <button id="scrapeButton" type="button" onclick>Scrape Recipe</button>
+      <h2>Scraping Results</h2>
+      <div id="result"></div>
+    </div>
+    <script src="./src/popup.ts" type="module"></script>
   </body>
 </html>
+<style>
+  div#app {
+    width: 300px;
+    height: 400px;
+  }
+</style>

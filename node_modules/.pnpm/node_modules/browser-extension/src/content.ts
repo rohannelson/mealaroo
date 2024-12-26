@@ -1,7 +1,13 @@
+export interface SendToPopup {
+  action: "sendToPopup";
+  data: string[];
+}
+
 browser.runtime.onMessage.addListener((message) => {
   if (message.action === "scrapeHTML") {
     const ingredients = parseTopic("ingredient");
     console.log("Ingredients:", ingredients);
+    browser.runtime.sendMessage({ action: "sendToPopup", data: ingredients });
   }
 });
 
