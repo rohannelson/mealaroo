@@ -1,6 +1,6 @@
 export interface SendToPopup {
   action: "sendToPopup";
-  data: string[];
+  data: string[][];
 }
 
 browser.runtime.onMessage.addListener((message) => {
@@ -17,19 +17,19 @@ function parseTopic(topic: string) {
     document.querySelectorAll("h1, h2, h3, h4, h5, h6")
   );
 
-  const topicHeading = headings.find((heading) =>
+  const topicHeadings = headings.filter((heading) =>
     new RegExp(`^${topic}.*`, "i").test(heading?.textContent ?? "")
   );
-  console.log(`topic headings`, topicHeading);
+  console.log(`topic headings`, topicHeadings);
 
-  if (!topicHeading) {
+  if (!topicHeadings[0]) {
     console.warn(`No heading with '${topic}' found.`);
     return [];
   }
 
   function findChildList(node: Element) {
     let parent = node.parentElement;
-    if (!parent || parent === document.documentElement) return [];
+    if (!parent || parent === document.documentElement) return;
     const childList = parent.querySelector("ul");
     if (!childList) {
       return findChildList(parent);
@@ -37,20 +37,20 @@ function parseTopic(topic: string) {
       return childList;
     }
   }
-  const childList = findChildList(topicHeading);
+  const childLists = topicHeadings
+    .map((topicHeading) => findChildList(topicHeading))
+    .filter((val) => val !== undefined);
 
-  console.log(`${topic} list`, childList);
+  console.log(`${topic} list`, childLists);
 
   function findListItems(childList: HTMLUListElement) {
     const itemsNodeList = childList.querySelectorAll("li");
     console.log("itemsNodeList", itemsNodeList);
-    const listItems = Array.from(itemsNodeList).map((item) =>
-      item.textContent?.trim()
-    );
+    const listItems = Array.from(itemsNodeList)
+      .map((item) => item.textContent?.trim())
+      .filter((val) => val !== undefined);
     return listItems;
   }
-  if (childList instanceof HTMLUListElement) {
-    const listItems = findListItems(childList);
-    return listItems;
-  }
+  const listItems = childLists.map((childList) => findListItems(childList));
+  return listItems;
 }

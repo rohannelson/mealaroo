@@ -2,7 +2,6 @@ import type { SendToPopup } from "./content";
 
 browser.action.onClicked.addListener((tab) => {
   if (tab.id) {
-    browser.tabs.sendMessage(tab.id, { action: "scrapeHTML" });
     browser.action.setPopup({ popup: "index.html", tabId: tab.id });
   }
 });
