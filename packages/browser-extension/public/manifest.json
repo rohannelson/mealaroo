@@ -5,7 +5,8 @@
   "description": "Recipe scraper and parser extension for Mealaroo",
   "permissions": ["activeTab"],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["browser-polyfill.js", "background.js"],
+    "service-worker": "background.js"
   },
   "icons": {
     "48": "icons/kangaroo.svg"
@@ -18,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["content.js"]
+      "js": ["browser-polyfill.js", "content.js"]
     }
   ]
 }

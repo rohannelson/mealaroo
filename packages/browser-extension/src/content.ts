@@ -1,6 +1,3 @@
-import browser from "webextension-polyfill";
-import { isType } from "./utils";
-
 export interface SendToPopup {
   action: "sendToPopup";
   data: string[][];
@@ -56,4 +53,9 @@ function parseTopic(topic: string) {
   }
   const listItems = childLists.map((childList) => findListItems(childList));
   return listItems;
+}
+
+//Defined separately here as it is imported directly
+function isType<T>(message: unknown): message is T {
+  return typeof message === "object" && message !== null && "action" in message;
 }
