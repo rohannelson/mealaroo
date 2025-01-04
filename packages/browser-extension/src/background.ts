@@ -1,5 +1,5 @@
 import type { SendToPopup } from "./content";
-import { isType } from "./utils";
+import browser from "webextension-polyfill";
 
 browser.action.onClicked.addListener((tab) => {
   if (tab.id) {
@@ -15,3 +15,7 @@ browser.runtime.onMessage.addListener((message): undefined => {
   }
   return;
 });
+
+function isType<T>(message: unknown): message is T {
+  return typeof message === "object" && message !== null && "action" in message;
+}

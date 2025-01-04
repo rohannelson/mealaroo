@@ -1,3 +1,5 @@
+//Don't import anything into your content script (I think? I think it's related to the rollup options...)
+
 export interface SendToPopup {
   action: "sendToPopup";
   data: string[][];
@@ -55,7 +57,7 @@ function parseTopic(topic: string) {
   return listItems;
 }
 
-//Defined separately here as it is imported directly
+//Reused code
 function isType<T>(message: unknown): message is T {
   return typeof message === "object" && message !== null && "action" in message;
 }

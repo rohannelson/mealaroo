@@ -12,7 +12,7 @@
   const activeTabId = activeTab[0].id;
   if (activeTabId) {
     console.log("activeTabId: ", activeTabId);
-    browser.tabs.sendMessage(activeTabId, { action: "scrapeHTML", data: 0 });
+    browser.tabs.sendMessage(activeTabId, { action: "scrapeHTML", data: 0 }).catch((error) => {console.error('error scraping html:', error)});
   }
 }
 
