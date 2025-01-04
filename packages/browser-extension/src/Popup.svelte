@@ -1,5 +1,7 @@
 <script lang='ts'>
+  import browser from "webextension-polyfill";
   import type { SendToPopup } from "./content";
+  import { isType } from "./utils";
 
   async function handleClick() {
   console.log("clicked");
@@ -15,10 +17,11 @@
 }
 
 let ingredients: string[][] | null | undefined = $state()
-browser.runtime.onMessage.addListener((message: SendToPopup) => {
+browser.runtime.onMessage.addListener((message: unknown): undefined => {
+  if (isType<SendToPopup>(message)) {
   if (message.action === "sendToPopup") {
     ingredients = message.data
-  }
+  }}
 });
 
 let page = $state(1)

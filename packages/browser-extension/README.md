@@ -9,4 +9,4 @@ web-ext run
 
 # ToDo
 
-Make cross-browser compatible
+parse method and other fields.

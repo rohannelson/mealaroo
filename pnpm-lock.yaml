@@ -16,6 +16,9 @@ importers:
       '@types/firefox-webext-browser':
         specifier: ^120.0.4
         version: 120.0.4
+      '@types/webextension-polyfill':
+        specifier: ^0.12.1
+        version: 0.12.1
       svelte:
         specifier: ^5.16.0
         version: 5.16.0
@@ -28,6 +31,9 @@ importers:
       vite:
         specifier: ^6.0.5
         version: 6.0.6
+      webextension-polyfill:
+        specifier: ^0.12.0
+        version: 0.12.0
 
   packages/web-app: {}
 
@@ -321,6 +327,9 @@ packages:
   '@types/firefox-webext-browser@120.0.4':
     resolution: {integrity: sha512-lBrpf08xhiZBigrtdQfUaqX1UauwZ+skbFiL8u2Tdra/rklkKadYmIzTwkNZSWtuZ7OKpFqbE2HHfDoFqvZf6w==}
 
+  '@types/webextension-polyfill@0.12.1':
+    resolution: {integrity: sha512-xPTFWwQ8BxPevPF2IKsf4hpZNss4LxaOLZXypQH4E63BDLmcwX/RMGdI4tB4VO4Nb6xDBH3F/p4gz4wvof1o9w==}
+
   acorn-typescript@1.4.13:
     resolution: {integrity: sha512-xsc9Xv0xlVfwp2o7sQ+GCQ1PgbkdcpWdTzrwXxO3xDMTAywVS3oXVOcOHuRjAPkS4P9b+yc/qNF15460v+jp4Q==}
     peerDependencies:
@@ -497,6 +506,9 @@ packages:
     peerDependenciesMeta:
       vite:
         optional: true
+
+  webextension-polyfill@0.12.0:
+    resolution: {integrity: sha512-97TBmpoWJEE+3nFBQ4VocyCdLKfw54rFaJ6EVQYLBCXqCIpLSZkwGgASpv4oPt9gdKCJ80RJlcmNzNn008Ag6Q==}
 
   zimmerframe@1.1.2:
     resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
@@ -683,6 +695,8 @@ snapshots:
 
   '@types/firefox-webext-browser@120.0.4': {}
 
+  '@types/webextension-polyfill@0.12.1': {}
+
   acorn-typescript@1.4.13(acorn@8.14.0):
     dependencies:
       acorn: 8.14.0
@@ -845,5 +859,7 @@ snapshots:
   vitefu@1.0.4(vite@6.0.6):
     optionalDependencies:
       vite: 6.0.6
+
+  webextension-polyfill@0.12.0: {}
 
   zimmerframe@1.1.2: {}

@@ -1,10 +1,13 @@
+import browser from "webextension-polyfill";
+import { isType } from "./utils";
+
 export interface SendToPopup {
   action: "sendToPopup";
   data: string[][];
 }
 
-browser.runtime.onMessage.addListener((message) => {
-  if (message.action === "scrapeHTML") {
+browser.runtime.onMessage.addListener((message): undefined => {
+  if (isType<Record<"action", "scrapeHTML">>(message)) {
     const ingredients = parseTopic("ingredient");
     console.log("Ingredients:", ingredients);
     browser.runtime.sendMessage({ action: "sendToPopup", data: ingredients });
