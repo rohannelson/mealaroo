@@ -12,8 +12,6 @@ export default defineConfig({
         index: "./index.html",
         background: "./src/background.ts",
         content: "./src/content.ts",
-        "browser-polyfill":
-          "./node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
       },
       output: {
         entryFileNames: `[name].js`,
