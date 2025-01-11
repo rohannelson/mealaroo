@@ -7,8 +7,8 @@ export interface SendToPopup {
 
 browser.runtime.onMessage.addListener((message): undefined => {
   if (isType<Record<"action", "scrapeHTML">>(message)) {
-    const ingredients = parseTopic("ingredient");
-    const method = parseTopic("preparation");
+    const ingredients = parseIngredients("ingredient");
+    const method = parseMethod("preparation");
     browser.runtime.sendMessage({
       action: "sendToPopup",
       data: { ingredients, method },
@@ -16,8 +16,38 @@ browser.runtime.onMessage.addListener((message): undefined => {
   }
 });
 
-function parseTopic(topic: string) {
+function parseIngredients(topic: string) {
   console.log(`Parsing ${topic}`);
+
+  const topicHeadings = findTopicHeadings(topic);
+
+  const childLists = findChildElements(topicHeadings, "ul");
+
+  console.log(`${topic} list`, childLists);
+
+  const listItems = childLists.map((childList) => findListItems(childList));
+  return listItems;
+}
+
+function parseMethod(topic: string) {
+  console.log(`Parsing ${topic}`);
+
+  const topicHeadings = findTopicHeadings(topic);
+
+  const childLists = findChildElements(topicHeadings, "ol");
+
+  console.log(`${topic} list`, childLists);
+
+  const listItems = childLists.map((childList) => findListItems(childList));
+  return listItems;
+}
+
+//Reused code, update in utils if changing here.
+function isType<T>(message: unknown): message is T {
+  return typeof message === "object" && message !== null && "action" in message;
+}
+
+function findTopicHeadings(topic: string) {
   const headings = Array.from(
     document.querySelectorAll("h1, h2, h3, h4, h5, h6")
   );
@@ -31,36 +61,31 @@ function parseTopic(topic: string) {
     console.warn(`No heading with '${topic}' found.`);
     return [];
   }
+  return topicHeadings;
+}
 
-  function findChildList(node: Element) {
+function findChildElements(topicHeadings: Element[], elementType: string) {
+  function findChildElement(node: Element) {
     let parent = node.parentElement;
     if (!parent || parent === document.documentElement) return;
-    const childList = parent.querySelector("ul");
+    const childList = parent.querySelector(elementType);
     if (!childList) {
-      return findChildList(parent);
+      return findChildElement(parent);
     } else {
       return childList;
     }
   }
-  const childLists = topicHeadings
-    .map((topicHeading) => findChildList(topicHeading))
+  const childElements = topicHeadings
+    .map((topicHeading) => findChildElement(topicHeading))
     .filter((val) => val !== undefined);
-
-  console.log(`${topic} list`, childLists);
-
-  function findListItems(childList: HTMLUListElement) {
-    const itemsNodeList = childList.querySelectorAll("li");
-    console.log("itemsNodeList", itemsNodeList);
-    const listItems = Array.from(itemsNodeList)
-      .map((item) => item.textContent?.trim())
-      .filter((val) => val !== undefined);
-    return listItems;
-  }
-  const listItems = childLists.map((childList) => findListItems(childList));
-  return listItems;
+  return childElements;
 }
 
-//Reused code
-function isType<T>(message: unknown): message is T {
-  return typeof message === "object" && message !== null && "action" in message;
+function findListItems(childList: Element) {
+  const itemsNodeList = childList.querySelectorAll("li");
+  console.log("itemsNodeList", itemsNodeList);
+  const listItems = Array.from(itemsNodeList)
+    .map((item) => item.textContent?.trim())
+    .filter((val) => val !== undefined);
+  return listItems;
 }
