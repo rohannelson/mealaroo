@@ -2,14 +2,17 @@
 
 export interface SendToPopup {
   action: "sendToPopup";
-  data: string[][];
+  data: { ingredients: string[][]; method: string[][] };
 }
 
 browser.runtime.onMessage.addListener((message): undefined => {
   if (isType<Record<"action", "scrapeHTML">>(message)) {
     const ingredients = parseTopic("ingredient");
-    console.log("Ingredients:", ingredients);
-    browser.runtime.sendMessage({ action: "sendToPopup", data: ingredients });
+    const method = parseTopic("preparation");
+    browser.runtime.sendMessage({
+      action: "sendToPopup",
+      data: { ingredients, method },
+    });
   }
 });
 

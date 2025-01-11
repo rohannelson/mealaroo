@@ -2,6 +2,7 @@
   import browser from "webextension-polyfill";
   import type { SendToPopup } from "./content";
   import { isType } from "./utils";
+  import Topic from "./Topic.svelte";
 
   async function handleClick() {
   console.log("clicked");
@@ -17,40 +18,20 @@
 }
 
 let ingredients: string[][] | null | undefined = $state()
+let method: string[][] | null | undefined = $state()
 browser.runtime.onMessage.addListener((message: unknown): undefined => {
   if (isType<SendToPopup>(message)) {
   if (message.action === "sendToPopup") {
-    ingredients = message.data
+    ingredients = message.data.ingredients
+    method = message.data.method
   }}
 });
-
-let page = $state(1)
 </script>
 
 <main>
     <h1>Mealaroo</h1>
     <button id="scrapeButton" type="button" onclick={handleClick}>Scrape Recipe</button>
     <h2>Scraping Results</h2>
-    <h3>Ingredients</h3>
-    {#if ingredients}
-    <div>List {page} of {ingredients.length}</div>
-    <div class="list-nav">
-    <button type="button" disabled={page===1} onclick={() => page -= 1}>
-      Back
-    </button>
-    <button type="button" disabled={page===ingredients.length} onclick={() => page += 1}>Next</button>
-  </div>
-    {/if}
-    <div id="result">
-      {@html ingredients && ("<ul>" +
-        ingredients[page - 1].map((item) => `<li>${item}</li>`).join("") +
-        "</ul>")
-      }
-    </div>
-  </main>
-
-<style>
-  div.list-nav {
-    margin-top: 0.5rem;
-  }
-</style>
+    <Topic data={ingredients} heading={"Ingredients"}/>
+    <Topic data={method} heading={"Method"}/>
+  </main> 
