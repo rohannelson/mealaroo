@@ -7,8 +7,8 @@ export interface SendToPopup {
 
 browser.runtime.onMessage.addListener((message): undefined => {
   if (isType<Record<"action", "scrapeHTML">>(message)) {
-    const ingredients = parseIngredients("ingredient");
-    const method = parseMethod("preparation");
+    const ingredients = parseIngredients();
+    const method = parseMethod();
     browser.runtime.sendMessage({
       action: "sendToPopup",
       data: { ingredients, method },
@@ -16,7 +16,8 @@ browser.runtime.onMessage.addListener((message): undefined => {
   }
 });
 
-function parseIngredients(topic: string) {
+function parseIngredients() {
+  const topic = "ingredient";
   console.log(`Parsing ${topic}`);
 
   const topicHeadings = findTopicHeadings(topic);
@@ -29,12 +30,13 @@ function parseIngredients(topic: string) {
   return listItems;
 }
 
-function parseMethod(topic: string) {
+function parseMethod() {
+  const topic = ["preparation", "method", "instructions", "directions"];
   console.log(`Parsing ${topic}`);
 
   const topicHeadings = findTopicHeadings(topic);
 
-  const childLists = findChildElements(topicHeadings, "ol");
+  const childLists = findChildElements(topicHeadings, "ol, ul");
 
   console.log(`${topic} list`, childLists);
 
@@ -47,13 +49,16 @@ function isType<T>(message: unknown): message is T {
   return typeof message === "object" && message !== null && "action" in message;
 }
 
-function findTopicHeadings(topic: string) {
+function findTopicHeadings(topic: string | string[]) {
   const headings = Array.from(
     document.querySelectorAll("h1, h2, h3, h4, h5, h6")
   );
 
   const topicHeadings = headings.filter((heading) =>
-    new RegExp(`^${topic}.*`, "i").test(heading?.textContent ?? "")
+    new RegExp(
+      `^${Array.isArray(topic) ? topic.join("|") : topic}.*`,
+      "i"
+    ).test(heading?.textContent ?? "")
   );
   console.log(`topic headings`, topicHeadings);
 
