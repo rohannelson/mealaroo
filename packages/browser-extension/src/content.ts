@@ -22,12 +22,24 @@ function parseIngredients() {
 
   const topicHeadings = findTopicHeadings(topic);
 
-  const childLists = findChildElements(topicHeadings, "ul");
+  const childElements = findChildElements(topicHeadings, [
+    { selector: "ul", all: true },
+    { selector: "p", all: true },
+    { selector: "div" },
+  ]);
 
-  console.log(`${topic} list`, childLists);
+  console.log(`${topic} list`, childElements);
 
-  const listItems = childLists.map((childList) => findListItems(childList));
-  return listItems;
+  const childItems = childElements.map((childItem) => {
+    if (childItem.tagName === "UL") {
+      return findListItems(childItem);
+    } else if (childItem.tagName === "P") {
+      //handle if p
+    } else if (childItem.tagName === "DIV") {
+      //handle if div
+    }
+  });
+  return childItems;
 }
 
 function parseMethod() {
@@ -69,21 +81,45 @@ function findTopicHeadings(topic: string | string[]) {
   return topicHeadings;
 }
 
-function findChildElements(topicHeadings: Element[], elementType: string) {
-  function findChildElement(node: Element) {
-    let parent = node.parentElement;
-    if (!parent || parent === document.documentElement) return;
-    const childList = parent.querySelector(elementType);
-    if (!childList) {
-      return findChildElement(parent);
+type PreferredSelectors = { selector: string; all?: boolean }[];
+
+function findChildElements(
+  topicHeadings: Element[],
+  elementTypes: string | PreferredSelectors
+): Element[] {
+  const childElements = topicHeadings
+    .map((topicHeading) => findSubElements(topicHeading as HTMLElement)) // Not sure how to parse at this point.
+    .filter((val) => val !== undefined);
+  return childElements.flat();
+
+  //handle string ElementType
+  function findSubElements(node: HTMLElement): Element[] {
+    const parent = node.parentElement;
+    if (!parent || parent === document.documentElement) return [];
+    const subElements =
+      typeof elementTypes === "string"
+        ? [parent.querySelector(elementTypes)].filter((e) => e !== null)
+        : findPreferredSubElements(elementTypes, parent);
+    if (!subElements || node.innerText === parent.innerText) {
+      return findSubElements(parent);
     } else {
-      return childList;
+      return subElements;
     }
   }
-  const childElements = topicHeadings
-    .map((topicHeading) => findChildElement(topicHeading))
-    .filter((val) => val !== undefined);
-  return childElements;
+  //handle Array of ElementTypes
+  function findPreferredSubElements(
+    elementTypes: PreferredSelectors,
+    parent: HTMLElement
+  ): Element[] {
+    for (let elementType of elementTypes) {
+      const subElements = elementType.all
+        ? Array.from(parent.querySelectorAll(elementType.selector))
+        : [parent.querySelector(elementType.selector)];
+      const elements = subElements.filter((e) => e !== null);
+      return elements;
+    }
+    return []; // just keeping TypeScript happy...
+  }
 }
 
 function findListItems(childList: Element) {
