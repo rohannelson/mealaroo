@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 let page = $state(1)
 let {data, heading} = $props()
 </script>
@@ -15,7 +15,7 @@ let {data, heading} = $props()
     
     <div id="result">
       {@html data && ("<ul>" +
-        data[page - 1].map((item) => `<li>${item}</li>`).join("") +
+        data[page - 1].map((item: string) => `<li>${item}</li>`).join("") +
         "</ul>")
       }
 </div>

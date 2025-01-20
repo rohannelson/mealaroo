@@ -11,7 +11,7 @@ export default defineConfig({
       input: {
         index: "./index.html",
         background: "./src/background.ts",
-        content: "./src/content.ts",
+        content: "./src/content/index.ts",
       },
       output: {
         entryFileNames: `[name].js`,

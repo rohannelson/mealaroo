@@ -1,6 +1,6 @@
 <script lang='ts'>
   import browser from "webextension-polyfill";
-  import type { SendToPopup } from "./content";
+  import type { SendToPopup } from "./content/index";
   import { isType } from "./utils";
   import Topic from "./Topic.svelte";
 
