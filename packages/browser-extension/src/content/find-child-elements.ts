@@ -1,47 +1,54 @@
-//Something here isn't quite right...
+//Succesfully returning inner text from div with <br/>
 
 type PreferredSelectors = { selector: string; all?: boolean }[];
 
 export default function findChildElements(
-  topicHeadings: Element[],
+  topicHeadings: HTMLElement[],
   elementTypes: string | PreferredSelectors
-): Element[] {
+) {
   const childElements = topicHeadings
     .map((topicHeading) => {
-      return findSubElements(topicHeading as HTMLElement);
+      return findSubElements(topicHeading, topicHeading.innerText);
     }) // Not sure how to parse at this point.
     .filter((val) => val !== undefined);
   return childElements.flat();
 
   //handle string ElementType
-  function findSubElements(node: HTMLElement): Element[] {
+  function findSubElements(
+    node: HTMLElement,
+    headingInnerText: string
+  ): HTMLElement[] {
     const parent = node.parentElement;
     if (!parent || parent === document.documentElement) return [];
     const subElements =
       typeof elementTypes === "string"
-        ? [parent.querySelector(elementTypes)].filter((e) => e !== null)
-        : findPreferredSubElements(elementTypes, parent);
-    if (!subElements) {
-      return findSubElements(parent);
+        ? [parent.querySelector(elementTypes)].filter(
+            (e) => e instanceof HTMLElement
+          )
+        : findPreferredSubElements(elementTypes, parent, headingInnerText);
+    if (!subElements[0]) {
+      return findSubElements(parent, headingInnerText);
     } else {
-      console.log("subElements", subElements);
+      console.log("returning subElements", subElements);
       return subElements;
     }
   }
   //handle Array of ElementTypes
   function findPreferredSubElements(
     elementTypes: PreferredSelectors,
-    parent: HTMLElement
-  ): Element[] {
+    parent: HTMLElement,
+    headingInnerText: string
+  ): HTMLElement[] {
     for (let elementType of elementTypes) {
       console.log("querying element type", elementType);
       const subElements = elementType.all
         ? Array.from(parent.querySelectorAll(elementType.selector))
         : [parent.querySelector(elementType.selector)];
-      const elements = subElements.filter((e) => e !== null);
+      const elements = subElements.filter((e) => e instanceof HTMLElement);
       //Should add a typeGuard...
-      return elements; //NEED TO ADD A CHECK TO SEE IF OUTPUT IS VALID/DESIRED
+      if (elements[0] && elements[0].innerText !== headingInnerText)
+        return elements;
     }
-    return []; // just keeping TypeScript happy...
+    return [];
   }
 }
