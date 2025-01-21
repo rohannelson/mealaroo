@@ -1,8 +1,9 @@
-import findChildElements from "./find-child-elements";
-import findListItems from "./find-list-items";
-import { findTopicHeadings } from "./find-topic-headings";
+import findChildElements from "./dom-queries/find-child-elements";
+import findListItems from "./dom-queries/find-list-items";
+import { findTopicHeadings } from "./dom-queries/find-topic-headings";
+import { parseDivText } from "./parsing/parse-div-text";
 
-export default function parseIngredients() {
+export default function parseIngredients(): string[][] {
   const topic = "ingredient";
   console.log(`Parsing ${topic}`);
 
@@ -11,20 +12,23 @@ export default function parseIngredients() {
   const childElements = findChildElements(topicHeadings, [
     { selector: "ul", all: true },
     { selector: "p", all: true },
+    { selector: "p", all: true },
     { selector: "div" },
   ]);
 
   console.log(`${topic} list`, childElements);
 
-  const childItems = childElements.map((childItem: Element) => {
+  const childItems = childElements.map((childItem: HTMLElement) => {
     if (childItem.tagName === "UL") {
       return findListItems(childItem);
     } else if (childItem.tagName === "P") {
       console.log("found p"); //handle if p
+      return [];
     } else if (childItem.tagName === "DIV") {
-      console.log("found div"); //handle if div
+      return parseDivText(childItem.innerText);
     } else {
       console.log(childItem.tagName, "not handled");
+      return [];
     }
   });
   return childItems;
