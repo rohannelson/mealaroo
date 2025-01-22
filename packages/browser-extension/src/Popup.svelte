@@ -3,6 +3,7 @@
   import type { SendToPopup } from "./content/index";
   import { isType } from "./utils";
   import Topic from "./Topic.svelte";
+  import type { TopicData } from "./types";
 
   async function handleClick() {
   console.log("clicked");
@@ -17,8 +18,8 @@
   }
 }
 
-let ingredients: string[][] | null | undefined = $state()
-let method: string[][] | null | undefined = $state()
+let ingredients: TopicData = $state()
+let method: TopicData = $state()
 browser.runtime.onMessage.addListener((message: unknown): undefined => {
   if (isType<SendToPopup>(message)) {
   if (message.action === "sendToPopup") {

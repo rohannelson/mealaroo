@@ -18,18 +18,20 @@ export default function parseMethod() {
 
   console.log(`${topic} list`, childLists);
 
-  const listItems = childLists.map((childItem: HTMLElement) => {
-    if (childItem.tagName === "UL") {
-      return findListItems(childItem);
-    } else if (childItem.tagName === "P") {
-      console.log("found p"); //handle if p
-      return [];
-    } else if (childItem.tagName === "DIV") {
-      return parseDivText(childItem.innerText);
-    } else {
-      console.log(childItem.tagName, "not handled");
-      return [];
+  const listItems = childLists.map(
+    (childItem: HTMLElement): { text: string }[] => {
+      if (childItem.tagName === "UL") {
+        return findListItems(childItem);
+      } else if (childItem.tagName === "P") {
+        console.log("found p"); //handle if p
+        return [];
+      } else if (childItem.tagName === "DIV") {
+        return parseDivText(childItem.innerText);
+      } else {
+        console.log(childItem.tagName, "not handled");
+        return [];
+      }
     }
-  });
+  );
   return listItems;
 }

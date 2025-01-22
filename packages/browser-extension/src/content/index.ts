@@ -5,7 +5,7 @@ import parseMethod from "./parse-method";
 
 export interface SendToPopup {
   action: "sendToPopup";
-  data: { ingredients: string[][]; method: string[][] };
+  data: { ingredients: { text: string }[][]; method: { text: string }[][] };
 }
 
 browser.runtime.onMessage.addListener((message): undefined => {
