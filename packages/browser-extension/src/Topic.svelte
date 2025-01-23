@@ -8,7 +8,7 @@ let {data, heading}: {data: TopicData, heading: string} = $props()
 {#if data?.[0]}
 <h3>{heading}</h3>    
     <div>List {page} of {data.length}</div>
-    <div class="list-nav">
+    <div class="mt-0.5">
     <button type="button" disabled={page===1} onclick={() => page -= 1}>
       Back
     </button>
@@ -31,9 +31,6 @@ let {data, heading}: {data: TopicData, heading: string} = $props()
 </div>
 {/if}
 <style>
-    div.list-nav {
-      margin-top: 0.5rem;
-    }
     div#result ul {
       display: flex;
       flex-direction: column;
