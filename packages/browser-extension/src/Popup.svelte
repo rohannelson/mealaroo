@@ -30,7 +30,7 @@ browser.runtime.onMessage.addListener((message: unknown): undefined => {
 </script>
 
 <main class="p-6">
-    <h1 class="text-2xl font-bold">Mealaroo</h1>
+    <h1 class=" prose-2xl">Mealaroo</h1>
     <button id="scrapeButton" type="button" onclick={handleClick} class="border border-amber-600 rounded-md p-1 text-sm font-semibold hover:bg-amber-600 hover:text-white z-auto pointer-events-auto">Scrape Recipe</button>
     {#if (ingredients || method)}<h2 class="text-xl font-bold">Scraping Results</h2>{/if}
     <Topic data={ingredients} heading={"Ingredients"}/>
