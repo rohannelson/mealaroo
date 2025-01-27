@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@plugin "daisyui";
 @layer components {
   :root {
     color: var(--color-zinc-800);
