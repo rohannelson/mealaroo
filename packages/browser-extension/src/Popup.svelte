@@ -31,7 +31,7 @@ browser.runtime.onMessage.addListener((message: unknown): undefined => {
 
 <main class="p-6 flex flex-col gap-2">
     <h1 class="text-2xl font-bold">Mealaroo</h1>
-    <button id="scrapeButton" type="button" onclick={handleClick} class="border border-zinc-600 rounded-md p-1 text-sm font-semibold z-auto pointer-events-auto hover:bg-zinc-600 hover:text-white">Scrape Recipe</button>
+    <button id="scrapeButton" type="button" onclick={handleClick} class="btn btn-primary">Scrape Recipe</button>
     <div class="flex-col gap-1">
     {#if (ingredients || method)}
     <h2 class="text-xl font-bold">Scraping Results</h2>{/if}

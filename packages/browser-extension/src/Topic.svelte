@@ -10,10 +10,10 @@ let {data, heading}: {data: TopicData, heading: string} = $props()
 <h3 class="font-semibold">{heading}</h3>    
     <div>List {page} of {data.length}</div>
     <div class="mt-0.5">
-    <button type="button" disabled={page===1} onclick={() => page -= 1} class="ml-auto rounded-md px-1.5 border border-zinc-600">
+    <button type="button" disabled={page===1} onclick={() => page -= 1} class="btn btn-sm btn-primary btn-soft">
       Back
     </button>
-    <button type="button" disabled={page===data.length} onclick={() => page += 1} class="ml-auto rounded-md px-1.5 border border-zinc-600">Next</button>
+    <button type="button" disabled={page===data.length} onclick={() => page += 1} class="btn btn-sm btn-primary btn-soft">Next</button>
   </div>
     <!--Need to iterate through in a more idomatic way-->
     <div id="result">
@@ -25,7 +25,7 @@ let {data, heading}: {data: TopicData, heading: string} = $props()
           {:else}
           <li class="list-disc marker:text-zinc-600 ml-4">{text}</li>
           {/if}
-          <button onclick={() => {data[page-1][i].isHeading = !isHeading}} class={`ml-auto rounded-md px-1.5 border border-zinc-600 h-fit ${isHeading ? 'bg-zinc-300' : ''}`}>Hh</button>
+          <button onclick={() => {data[page-1][i].isHeading = !isHeading}} class={`ml-auto btn btn-square btn-outline ${isHeading ? 'btn-accent' : ''}`}>Hh</button>
         </div>
       {/each}
     </ul>
