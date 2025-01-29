@@ -1,6 +1,6 @@
 import { mount } from "svelte";
 import Popup from "./Popup.svelte";
-import "./tailwind.css";
+import "./main.css";
 
 const popup = mount(Popup, {
   target: document.getElementById("popup")!,

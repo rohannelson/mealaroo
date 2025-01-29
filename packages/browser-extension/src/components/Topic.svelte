@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { TopicData } from "./types";
+  import type { TopicData } from "../types";
 
 let page = $state(1)
 let {data, heading}: {data: TopicData, heading: string} = $props()
@@ -25,7 +25,7 @@ let {data, heading}: {data: TopicData, heading: string} = $props()
           {:else}
           <li class="list-disc marker:text-zinc-600 ml-4">{text}</li>
           {/if}
-          <button onclick={() => {data[page-1][i].isHeading = !isHeading}} class={`ml-auto btn btn-square btn-outline ${isHeading ? 'btn-accent' : ''}`}>Hh</button>
+          <button onclick={() => {data[page-1][i].isHeading = !isHeading}} class={`ml-auto btn btn-square btn-sm btn-outline ${isHeading ? 'btn-accent' : ''}`}>Hh</button>
         </div>
       {/each}
     </ul>
