@@ -6,15 +6,15 @@
 </script>
 
 {#if data?.[0]}
-  <div>
+  <div class="flex flex-col gap-1">
     <h3 class="font-semibold">{heading}</h3>
-    <div>List {page} of {data.length}</div>
-    <div class="mt-0.5">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="mr-auto text-sm">List {page} of {data.length}</div>
       <button
         type="button"
         disabled={page === 1}
         onclick={() => (page -= 1)}
-        class="btn btn-sm btn-primary btn-soft"
+        class="btn btn-sm btn-secondary"
       >
         Back
       </button>
@@ -22,14 +22,13 @@
         type="button"
         disabled={page === data.length}
         onclick={() => (page += 1)}
-        class="btn btn-sm btn-primary btn-soft">Next</button
+        class="btn btn-sm btn-secondary">Next</button
       >
     </div>
-    <!--Need to iterate through in a more idomatic way-->
     <div id="result">
-      <ul>
+      <ul class="flex flex-col gap-1">
         {#each data[page - 1] as { text, isHeading }, i}
-          <div class="flex my-0.5">
+          <div class="flex">
             {#if isHeading}
               <h4 class="font-semibold">{text}</h4>
             {:else}
@@ -39,7 +38,7 @@
               onclick={() => {
                 data[page - 1][i].isHeading = !isHeading;
               }}
-              class={`ml-auto btn btn-square btn-sm btn-outline ${isHeading ? "btn-accent" : ""}`}
+              class={`ml-auto btn btn-square btn-sm btn-outline ${isHeading ? "btn-primary" : ""}`}
               >Hh</button
             >
           </div>

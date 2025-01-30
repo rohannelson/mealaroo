@@ -46,12 +46,13 @@
     onclick={handleClick}
     class="btn btn-primary">Scrape Recipe</button
   >
-  <div class="flex-col gap-1">
+  <div class="flex-col gap-1 mt-2">
     {#if ingredients || method}
-      <div class="card card-md bg-base-200">
-        <div class="card-body">
+      <div class="card card-md bg-base-200 shadow-sm">
+        <div class="card-body pt-4 px-5">
           <h2 class="card-title">Scraping Results</h2>
           <Topic data={ingredients} heading={"Ingredients"} />
+          <div class="divider mt-1 mb-0.5"></div>
           <Topic data={method} heading={"Method"} />
         </div>
       </div>{/if}
