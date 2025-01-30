@@ -31,7 +31,7 @@ export default function parseMethod() {
         console.log(childItem.tagName, "not handled");
         return [];
       }
-    }
+    },
   );
   return listItems;
 }

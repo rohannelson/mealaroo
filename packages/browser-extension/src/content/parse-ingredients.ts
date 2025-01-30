@@ -34,7 +34,7 @@ export default function parseIngredients(): {
         console.log(childItem.tagName, "not handled");
         return [];
       }
-    }
+    },
   );
   return childItems;
 }
