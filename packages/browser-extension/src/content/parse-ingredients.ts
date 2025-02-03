@@ -1,9 +1,10 @@
-import mergeAdjacentTextNodes from "./dom-mutations/merge-adjacent-text-nodes";
-import removeCommentNodes from "./dom-mutations/strip-comments";
+//import mergeAdjacentTextNodes from "./dom-mutations/merge-adjacent-text-nodes";
+//import removeCommentNodes from "./dom-mutations/strip-comments";
 import findChildElements from "./dom-queries/find-child-elements";
 import findContainerNodes from "./dom-queries/find-container-nodes";
+import findKeyElements from "./dom-queries/find-key-elements";
 import findListItems from "./dom-queries/find-list-items";
-import findTextNodes from "./dom-queries/find-text-nodes";
+//import findTextNodes from "./dom-queries/find-text-nodes";
 import { findTopicHeadings } from "./dom-queries/find-topic-headings";
 import { parseDivText } from "./parsing/parse-div-text";
 
@@ -18,12 +19,14 @@ export default function parseIngredients(): {
 
   const containerNodes = findContainerNodes(topicHeadings);
 
-  removeCommentNodes(containerNodes);
+  findKeyElements(containerNodes);
 
-  mergeAdjacentTextNodes(containerNodes);
+  //removeCommentNodes(containerNodes);
 
-  const textNodes = findTextNodes(containerNodes);
-  console.log("textNodes", textNodes);
+  //mergeAdjacentTextNodes(containerNodes);
+
+  //const textNodes = findTextNodes(containerNodes);
+  //console.log("textNodes", textNodes);
 
   const childElements = findChildElements(topicHeadings, [
     { selector: "ul", all: true },
