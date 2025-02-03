@@ -9,7 +9,7 @@ export default function findChildElements(
   const childElements = topicHeadings
     .map((topicHeading) => {
       return findSubElements(topicHeading, topicHeading.innerText);
-    }) // Not sure how to parse at this point.
+    })
     .filter((val) => val !== undefined);
   return childElements.flat();
 
@@ -40,12 +40,11 @@ export default function findChildElements(
     headingInnerText: string,
   ): HTMLElement[] {
     for (let elementType of elementTypes) {
-      console.log("querying element type", elementType);
+      //console.log("querying element type", elementType);
       const subElements = elementType.all
         ? Array.from(parent.querySelectorAll(elementType.selector))
         : [parent.querySelector(elementType.selector)];
       const elements = subElements.filter((e) => e instanceof HTMLElement);
-      //Should add a typeGuard...
       if (elements[0] && elements[0].innerText !== headingInnerText)
         return elements;
     }

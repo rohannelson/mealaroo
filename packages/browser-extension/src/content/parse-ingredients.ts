@@ -1,4 +1,5 @@
 import findChildElements from "./dom-queries/find-child-elements";
+import findContainerNodes from "./dom-queries/find-container-nodes";
 import findListItems from "./dom-queries/find-list-items";
 import { findTopicHeadings } from "./dom-queries/find-topic-headings";
 import { parseDivText } from "./parsing/parse-div-text";
@@ -12,9 +13,11 @@ export default function parseIngredients(): {
 
   const topicHeadings = findTopicHeadings(topic);
 
+  const containerNodes = findContainerNodes(topicHeadings);
+  console.log("containerNode innerText", containerNodes[0].innerText);
+
   const childElements = findChildElements(topicHeadings, [
     { selector: "ul", all: true },
-    { selector: "p", all: true },
     { selector: "p", all: true },
     { selector: "div" },
   ]);
