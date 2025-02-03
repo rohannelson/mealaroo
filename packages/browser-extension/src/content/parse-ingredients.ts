@@ -19,7 +19,8 @@ export default function parseIngredients(): {
 
   const containerNodes = findContainerNodes(topicHeadings);
 
-  findKeyElements(containerNodes);
+  const keyElements = findKeyElements(containerNodes);
+  console.log("keyElements:", keyElements);
 
   //removeCommentNodes(containerNodes);
 
