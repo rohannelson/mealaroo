@@ -1,4 +1,3 @@
-export type TopicData =
-  | { text: string; isHeading?: boolean }[][]
-  | null
-  | undefined;
+import type { ParsedNode } from "./content/types";
+
+export type TopicData = ParsedNode[][] | null | undefined;

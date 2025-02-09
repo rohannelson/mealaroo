@@ -4,11 +4,9 @@ import findContainerElements from "./dom-queries/find-container-elements";
 import findKeyNodes from "./dom-queries/find-key-nodes";
 import { findTopicHeadings } from "./dom-queries/find-topic-headings";
 import { parseKeyNodes } from "./parsing/parse-key-nodes";
+import type { ParsedNode } from "./types";
 
-export default function parseIngredients(): {
-  text: string;
-  isHeading?: boolean;
-}[][] {
+export default function parseIngredients(): ParsedNode[][] {
   const topic = "ingredient";
   console.log(`Parsing ${topic}`);
 

@@ -3,11 +3,6 @@
 import parseIngredients from "./parse-ingredients";
 import parseMethod from "./parse-method";
 
-export interface SendToPopup {
-  action: "sendToPopup";
-  data: { ingredients: { text: string }[][]; method: { text: string }[][] };
-}
-
 browser.runtime.onMessage.addListener((message): undefined => {
   if (isType<Record<"action", "scrapeHTML">>(message)) {
     const ingredients = parseIngredients();

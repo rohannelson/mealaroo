@@ -1,10 +1,11 @@
 <script lang="ts">
   import browser from "webextension-polyfill";
-  import type { SendToPopup } from "./content/index";
+
   import { isType } from "./utils";
   import Topic from "./components/Topic.svelte";
   import type { TopicData } from "./types";
   import LightDarkToggle from "./components/LightDarkToggle.svelte";
+  import type { SendToPopup } from "./content/types";
 
   async function handleClick() {
     console.log("clicked");
