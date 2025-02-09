@@ -1,4 +1,4 @@
-export default function findContainerNodes(
+export default function findContainerElements(
   topicHeadings: HTMLElement[],
 ): HTMLElement[] {
   const containerNodes = topicHeadings

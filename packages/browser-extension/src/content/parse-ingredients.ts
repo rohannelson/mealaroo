@@ -1,12 +1,9 @@
-//import mergeAdjacentTextNodes from "./dom-mutations/merge-adjacent-text-nodes";
-//import removeCommentNodes from "./dom-mutations/strip-comments";
-import findChildElements from "./dom-queries/find-child-elements";
-import findContainerNodes from "./dom-queries/find-container-nodes";
-import findKeyElements from "./dom-queries/find-key-elements";
-import findListItems from "./dom-queries/find-list-items";
-//import findTextNodes from "./dom-queries/find-text-nodes";
+import mergeAdjacentTextNodes from "./dom-mutations/merge-adjacent-text-nodes";
+import removeCommentNodes from "./dom-mutations/strip-comments";
+import findContainerElements from "./dom-queries/find-container-elements";
+import findKeyNodes from "./dom-queries/find-key-nodes";
 import { findTopicHeadings } from "./dom-queries/find-topic-headings";
-import { parseDivText } from "./parsing/parse-div-text";
+import { parseKeyNodes } from "./parsing/parse-key-nodes";
 
 export default function parseIngredients(): {
   text: string;
@@ -17,40 +14,16 @@ export default function parseIngredients(): {
 
   const topicHeadings = findTopicHeadings(topic);
 
-  const containerNodes = findContainerNodes(topicHeadings);
+  const containerElements = findContainerElements(topicHeadings);
 
-  const keyElements = findKeyElements(containerNodes);
-  console.log("keyElements:", keyElements);
+  removeCommentNodes(containerElements);
 
-  //removeCommentNodes(containerNodes);
+  mergeAdjacentTextNodes(containerElements);
 
-  //mergeAdjacentTextNodes(containerNodes);
+  const keyNodes = findKeyNodes(containerElements);
+  console.log("keyElements:", keyNodes);
 
-  //const textNodes = findTextNodes(containerNodes);
-  //console.log("textNodes", textNodes);
+  const parsedNodes = parseKeyNodes(keyNodes);
 
-  const childElements = findChildElements(topicHeadings, [
-    { selector: "ul", all: true },
-    { selector: "p", all: true },
-    { selector: "div" },
-  ]);
-
-  console.log(`${topic} list`, childElements);
-
-  const childItems = childElements.map(
-    (childItem: HTMLElement): { text: string }[] => {
-      if (childItem.tagName === "UL") {
-        return findListItems(childItem);
-      } else if (childItem.tagName === "P") {
-        console.log("found p"); //handle if p
-        return [];
-      } else if (childItem.tagName === "DIV") {
-        return parseDivText(childItem.innerText);
-      } else {
-        console.log(childItem.tagName, "not handled");
-        return [];
-      }
-    },
-  );
-  return childItems;
+  return parsedNodes;
 }

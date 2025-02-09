@@ -1,4 +1,4 @@
-export default function findKeyElements(parentNodes: HTMLElement[]) {
+export default function findKeyNodes(parentNodes: HTMLElement[]) {
   const selectedNodesArray: Node[][] = [];
   for (let parentNode of parentNodes) {
     let selectedNodes: Node[] = [];
