@@ -2,19 +2,18 @@
   import type { TopicData } from "../types";
 
   let tab = $state(1);
-  let { data, heading }: { data: TopicData; heading: string } = $props();
+  let { data }: { data: TopicData } = $props();
 </script>
 
 {#if data?.[0]}
   <div class="flex flex-col gap-1">
-    <h3 class="font-semibold">{heading}</h3>
     <div class="flex items-center gap-2 mb-2">
       <div class="mr-auto text-sm">List {tab} of {data.length}</div>
       <button
         type="button"
         disabled={tab === 1}
         onclick={() => (tab -= 1)}
-        class="btn btn-sm btn-secondary"
+        class="btn btn-sm btn-primary btn-outline"
       >
         Back
       </button>
@@ -22,7 +21,7 @@
         type="button"
         disabled={tab === data.length}
         onclick={() => (tab += 1)}
-        class="btn btn-sm btn-secondary">Next</button
+        class="btn btn-sm btn-primary btn-outline">Next</button
       >
     </div>
     <div id="result">

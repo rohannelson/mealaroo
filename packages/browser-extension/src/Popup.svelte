@@ -3,9 +3,11 @@
 
   import { isType } from "./utils";
   import Topic from "./components/Topic.svelte";
-  import type { TopicData } from "./types";
+  import type { Tabs, TopicData } from "./types";
   import LightDarkToggle from "./components/LightDarkToggle.svelte";
   import type { SendToPopup } from "./content/types";
+  import LeftArrow from "./icons/LeftArrow.svelte";
+  import RightArrow from "./icons/RightArrow.svelte";
 
   async function handleClick() {
     console.log("clicked");
@@ -34,6 +36,12 @@
       }
     }
   });
+
+  let tab = $state(0);
+  const tabs: Tabs = [
+    { heading: "Ingredients", data: () => ingredients },
+    { heading: "Method", data: () => method },
+  ];
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -51,11 +59,32 @@
     {#if ingredients || method}
       <div class="card card-md bg-base-200 shadow-sm">
         <div class="card-body pt-4 px-5">
-          <h2 class="card-title">Scraping Results</h2>
-          <Topic data={ingredients} heading={"Ingredients"} />
-          <div class="divider mt-1 mb-0.5"></div>
-          <Topic data={method} heading={"Method"} />
+          <div class="flex justify-content relative">
+            {#if tab > 0}
+              <button
+                class="btn btn-secondary btn-sm p-2 absolute left-0"
+                onclick={() => (tab -= 1)}
+                ><LeftArrow class="h-5 w-5 fill-primary-content" />{tabs[
+                  tab - 1
+                ].heading}</button
+              >
+            {/if}
+            <h2 class="card-title mx-auto mb-2">
+              {tabs[tab].heading}
+            </h2>
+            {#if tab < tabs.length - 1}
+              <button
+                class="btn btn-secondary btn-sm p-2 absolute right-0"
+                onclick={() => (tab += 1)}
+                >{tabs[tab + 1].heading}<RightArrow
+                  class="h-5 w-5 fill-primary-content"
+                /></button
+              >
+            {/if}
+          </div>
+          <Topic data={tabs[tab].data()} />
         </div>
-      </div>{/if}
+      </div>
+    {/if}
   </div>
 </main>
