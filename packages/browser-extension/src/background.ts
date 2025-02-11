@@ -1,5 +1,5 @@
-import type { SendToPopup } from "./content";
 import browser from "webextension-polyfill";
+import type { SendToPopup } from "./content/types";
 
 browser.action.onClicked.addListener((tab) => {
   if (tab.id) {
