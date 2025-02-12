@@ -7,14 +7,13 @@ export function parseKeyNodes(nodesArrays: Node[][]) {
         if (isHTMLElement(node)) {
           const parsedElement: ParsedNode = { text: node.innerText };
           if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(node.tagName)) {
-            console.log("parsed as heading");
             parsedElement.isHeading = true;
           }
           return parsedElement;
         }
         return { text: node.nodeValue };
       })
-      .filter((object): object is ParsedNode => !!object.text);
+      .filter((object): object is ParsedNode => !!object.text?.trim());
   });
   return parsedNodes;
 }

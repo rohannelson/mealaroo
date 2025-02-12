@@ -37,7 +37,7 @@
               onclick={() => {
                 data[tab - 1][i].isHeading = !isHeading;
               }}
-              class={`ml-auto btn btn-square btn-sm btn-outline ${isHeading ? "btn-primary" : ""}`}
+              class={`ml-auto btn btn-square btn-sm btn-outline ${isHeading ? "btn-accent" : ""}`}
               >Hh</button
             >
           </div>
