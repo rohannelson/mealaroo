@@ -38,10 +38,12 @@
   });
 
   let tab = $state(0);
-  const tabs: Tabs = [
-    { heading: "Ingredients", data: () => ingredients },
-    { heading: "Method", data: () => method },
-  ];
+  const tabs: Tabs = $derived([
+    { heading: "Ingredients", component: Topic, props: { data: ingredients } },
+    { heading: "Method", component: Topic, props: { data: method } },
+  ]);
+  const Tab = $derived(tabs[tab].component);
+  const props = $derived(tabs[tab].props);
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -82,7 +84,7 @@
               >
             {/if}
           </div>
-          <Topic data={tabs[tab].data()} />
+          <Tab {...props} />
         </div>
       </div>
     {/if}
