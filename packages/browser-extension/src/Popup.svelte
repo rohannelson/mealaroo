@@ -3,7 +3,7 @@
 
   import { isType } from "./utils";
   import Topic from "./components/Topic.svelte";
-  import type { Tabs, TopicData } from "./types";
+  import type { TopicData } from "./types";
   import LightDarkToggle from "./components/LightDarkToggle.svelte";
   import type { SendToPopup } from "./content/types";
   import LeftArrow from "./icons/LeftArrow.svelte";
@@ -38,12 +38,7 @@
   });
 
   let tab = $state(0);
-  const tabs: Tabs = $derived([
-    { heading: "Ingredients", component: Topic, props: { data: ingredients } },
-    { heading: "Method", component: Topic, props: { data: method } },
-  ]);
-  const Tab = $derived(tabs[tab].component);
-  const props = $derived(tabs[tab].props);
+  const tabHeadings = ["Ingredients", "Method"];
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -66,25 +61,29 @@
               <button
                 class="btn btn-secondary btn-sm p-2 absolute left-0"
                 onclick={() => (tab -= 1)}
-                ><LeftArrow class="h-5 w-5 fill-primary-content" />{tabs[
+                ><LeftArrow class="h-5 w-5 fill-primary-content" />{tabHeadings[
                   tab - 1
-                ].heading}</button
+                ]}</button
               >
             {/if}
             <h2 class="card-title mx-auto mb-2">
-              {tabs[tab].heading}
+              {tabHeadings[tab]}
             </h2>
-            {#if tab < tabs.length - 1}
+            {#if tab < tabHeadings.length - 1}
               <button
                 class="btn btn-secondary btn-sm p-2 absolute right-0"
                 onclick={() => (tab += 1)}
-                >{tabs[tab + 1].heading}<RightArrow
+                >{tabHeadings[tab + 1]}<RightArrow
                   class="h-5 w-5 fill-primary-content"
                 /></button
               >
             {/if}
           </div>
-          <Tab {...props} />
+          {#if tab === 0}
+            <Topic data={ingredients} />
+          {:else if tab === 1}
+            <Topic data={method} />
+          {/if}
         </div>
       </div>
     {/if}
