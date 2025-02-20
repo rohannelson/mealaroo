@@ -7,7 +7,13 @@ export type ParsedNode = {
   isHeading?: boolean;
 };
 
+export type Metadata = { recipeName: string | undefined };
+
 export interface SendToPopup {
   action: "sendToPopup";
-  data: { ingredients: ParsedNode[][]; method: ParsedNode[][] };
+  data: {
+    ingredients: ParsedNode[][];
+    method: ParsedNode[][];
+    metadata: Metadata;
+  };
 }

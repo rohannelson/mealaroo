@@ -5,9 +5,10 @@
   import Topic from "./components/Topic.svelte";
   import type { TopicData } from "./types";
   import LightDarkToggle from "./components/LightDarkToggle.svelte";
-  import type { SendToPopup } from "./content/types";
+  import type { Metadata, SendToPopup } from "./content/types";
   import LeftArrow from "./icons/LeftArrow.svelte";
   import RightArrow from "./icons/RightArrow.svelte";
+  import MetadataTab from "./components/MetadataTab.svelte";
 
   async function handleClick() {
     console.log("clicked");
@@ -28,17 +29,19 @@
 
   let ingredients: TopicData = $state();
   let method: TopicData = $state();
+  let metadata: Metadata | undefined = $state();
   browser.runtime.onMessage.addListener((message: unknown): undefined => {
     if (isType<SendToPopup>(message)) {
       if (message.action === "sendToPopup") {
         ingredients = message.data.ingredients;
         method = message.data.method;
+        metadata = message.data.metadata;
       }
     }
   });
 
   let tab = $state(0);
-  const tabHeadings = ["Ingredients", "Method"];
+  const tabHeadings = ["Ingredients", "Method", "Metadata"];
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -83,6 +86,8 @@
             <Topic data={ingredients} />
           {:else if tab === 1}
             <Topic data={method} />
+          {:else if tab === 2}
+            <MetadataTab {metadata} />
           {/if}
         </div>
       </div>
