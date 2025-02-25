@@ -1,5 +1,6 @@
 //Be careful with imports - something things seem to work, whereas others don't... Possibly to do with Rollup config?
 
+import parseDescription from "./parse-description";
 import parseIngredients from "./parse-ingredients";
 import parseMethod from "./parse-method";
 import parseRecipeName from "./parse-recipe-name";
@@ -10,10 +11,11 @@ browser.runtime.onMessage.addListener((message): undefined => {
     const ingredients = parseIngredients();
     const method = parseMethod();
     const recipeName = parseRecipeName();
+    const description = parseDescription();
     const data: SendToPopup["data"] = {
       ingredients,
       method,
-      metadata: { recipeName },
+      metadata: { recipeName, description },
     };
     browser.runtime.sendMessage({
       action: "sendToPopup",

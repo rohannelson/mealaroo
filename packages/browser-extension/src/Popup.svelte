@@ -40,7 +40,7 @@
     }
   });
 
-  let tab = $state(0);
+  let tab = $state(2);
   const tabHeadings = ["Ingredients", "Method", "Metadata"];
 </script>
 
