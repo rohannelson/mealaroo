@@ -1,7 +1,9 @@
 <script lang="ts">
   import type { Metadata } from "../content/types";
+  import NavButtons from "./NavButtons.svelte";
 
   const { metadata }: { metadata: Metadata | undefined } = $props();
+  let tab = $state(1);
 </script>
 
 <div class="flex flex-col gap-1 mt-3">
@@ -14,10 +16,11 @@
   {#if metadata?.description?.[0]}
     <div class="flex flex-col justify-center gap-2 mb-2">
       <h4 class="font-semibold">Description</h4>
+      <NavButtons bind:tab data={metadata.description} />
       <p>
-        {metadata.description[0].length > 200
-          ? `${metadata.description[0].substring(0, 200)}...`
-          : metadata.description[0]}
+        {metadata.description[tab - 1].length > 200
+          ? `${metadata.description[tab - 1].substring(0, 200)}...`
+          : metadata.description[tab - 1]}
       </p>
     </div>
   {/if}

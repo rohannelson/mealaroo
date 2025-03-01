@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { TopicData } from "../types";
+  import NavButtons from "./NavButtons.svelte";
 
   let tab = $state(1);
   let { data }: { data: TopicData } = $props();
@@ -7,23 +8,7 @@
 
 {#if data?.[0]}
   <div class="flex flex-col gap-1">
-    <div class="flex items-center gap-2 mb-2">
-      <div class="mr-auto text-sm">List {tab} of {data.length}</div>
-      <button
-        type="button"
-        disabled={tab === 1}
-        onclick={() => (tab -= 1)}
-        class="btn btn-sm btn-primary btn-outline"
-      >
-        Back
-      </button>
-      <button
-        type="button"
-        disabled={tab === data.length}
-        onclick={() => (tab += 1)}
-        class="btn btn-sm btn-primary btn-outline">Next</button
-      >
-    </div>
+    <NavButtons bind:tab {data} />
     <div id="result">
       <ul class="flex flex-col gap-1">
         {#each data[tab - 1] as { text, isHeading }, i}
