@@ -24,4 +24,20 @@
       </p>
     </div>
   {/if}
+  {#if metadata?.source}
+    <div class="flex flex-col justify-center gap-2 mb-2">
+      <h4 class="font-semibold">Source</h4>
+      <p>
+        <a class="link" href={metadata.source.href}>{metadata.source.label}</a>
+      </p>
+    </div>
+  {/if}
+  {#if metadata?.timing}
+    <div class="flex flex-col justify-center gap-2 mb-2">
+      {#each metadata.timing as timing}
+        <h4 class="font-semibold">{timing.label}</h4>
+        <p>{timing.duration} min</p>
+      {/each}
+    </div>
+  {/if}
 </div>

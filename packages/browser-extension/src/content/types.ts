@@ -10,6 +10,11 @@ export type ParsedNode = {
 export type Metadata = {
   recipeName: string | undefined;
   description: string[];
+  source: {
+    label: string;
+    href: string;
+  };
+  timing: { label: string; duration: number }[];
 };
 
 export interface SendToPopup {
