@@ -4,6 +4,7 @@ import parseDescription from "./parse-description";
 import parseIngredients from "./parse-ingredients";
 import parseMethod from "./parse-method";
 import parseRecipeName from "./parse-recipe-name";
+import parseServes from "./parse-serves";
 import parseSource from "./parse-source";
 import parseTiming from "./parse-timing";
 import type { SendToPopup } from "./types";
@@ -16,10 +17,11 @@ browser.runtime.onMessage.addListener((message): undefined => {
     const description = parseDescription();
     const source = parseSource();
     const timing = parseTiming();
+    const serves = parseServes();
     const data: SendToPopup["data"] = {
       ingredients,
       method,
-      metadata: { recipeName, description, source, timing },
+      metadata: { recipeName, description, source, timing, serves },
     };
     browser.runtime.sendMessage({
       action: "sendToPopup",

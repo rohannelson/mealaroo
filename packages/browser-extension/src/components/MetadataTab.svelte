@@ -3,7 +3,8 @@
   import NavButtons from "./NavButtons.svelte";
 
   const { metadata }: { metadata: Metadata | undefined } = $props();
-  let tab = $state(1);
+  let descrTab = $state(1);
+  let servesTab = $state(1);
 </script>
 
 <div class="flex flex-col gap-1 mt-3">
@@ -15,12 +16,16 @@
   {/if}
   {#if metadata?.description?.[0]}
     <div class="flex flex-col justify-center gap-2 mb-2">
-      <h4 class="font-semibold">Description</h4>
-      <NavButtons bind:tab data={metadata.description} />
+      <div class="grid grid-cols-3">
+        <h4 class="font-semibold mt-1">Description</h4>
+        <div class="col-span-2">
+          <NavButtons bind:tab={descrTab} data={metadata.description} />
+        </div>
+      </div>
       <p>
-        {metadata.description[tab - 1].length > 200
-          ? `${metadata.description[tab - 1].substring(0, 200)}...`
-          : metadata.description[tab - 1]}
+        {metadata.description[descrTab - 1].length > 200
+          ? `${metadata.description[descrTab - 1].substring(0, 200)}...`
+          : metadata.description[descrTab - 1]}
       </p>
     </div>
   {/if}
@@ -38,6 +43,19 @@
         <h4 class="font-semibold">{timing.label}</h4>
         <p>{timing.duration} min</p>
       {/each}
+    </div>
+  {/if}
+  {#if metadata?.serves?.[0]}
+    <div class="flex flex-col justify-center gap-2 mb-2">
+      <div class="grid grid-cols-3">
+        <h4 class="font-semibold mt-1">Serves</h4>
+        <div class="col-span-2">
+          <NavButtons bind:tab={servesTab} data={metadata.serves} />
+        </div>
+      </div>
+      <p>
+        {metadata.serves}
+      </p>
     </div>
   {/if}
 </div>

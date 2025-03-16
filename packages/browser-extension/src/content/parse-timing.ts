@@ -59,8 +59,6 @@ function parseDuration(containerText: string) {
 
   const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
   const minutes = minsMatch ? parseInt(minsMatch[1], 10) : 0;
-  console.log("hours", hours);
-  console.log("minutes", minutes);
 
   // Calculate the total minutes
   const totalMinutes = hours * 60 + minutes;
