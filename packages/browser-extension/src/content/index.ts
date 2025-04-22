@@ -18,14 +18,14 @@ browser.runtime.onMessage.addListener((message): undefined => {
     removeCommentNodes([body]);
     mergeAdjacentTextNodes([body]);
     const keyNodes = findKeyNodes([document.body]);
-    console.log("keyNodes", keyNodes);
+
     const ingredients = parseIngredients();
     const method = parseMethod();
     const recipeName = parseRecipeName();
     const description = parseDescription();
     const source = parseSource();
     const timing = parseTiming();
-    const serves = parseServes();
+    const serves = parseServes(keyNodes);
     const data: SendToPopup["data"] = {
       ingredients,
       method,
