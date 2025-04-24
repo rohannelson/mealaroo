@@ -4,6 +4,7 @@ import mergeAdjacentTextNodes from "./dom-mutations/merge-adjacent-text-nodes";
 import removeCommentNodes from "./dom-mutations/strip-comments";
 import findKeyNodes from "./dom-queries/find-key-nodes";
 import parseDescription from "./parse-description";
+import parseImage from "./parse-image";
 import parseIngredients from "./parse-ingredients";
 import parseMethod from "./parse-method";
 import parseNotes from "./parse-notes";
@@ -28,11 +29,12 @@ browser.runtime.onMessage.addListener((message): undefined => {
     const source = parseSource();
     const timing = parseTiming();
     const serves = parseServes(keyNodes);
+    const imageUrl = parseImage();
     const data: SendToPopup["data"] = {
       ingredients,
       method,
       notes,
-      metadata: { recipeName, description, source, timing, serves },
+      metadata: { recipeName, description, source, timing, serves, imageUrl },
     };
     browser.runtime.sendMessage({
       action: "sendToPopup",

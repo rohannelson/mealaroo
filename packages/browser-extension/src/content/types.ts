@@ -16,6 +16,7 @@ export type Metadata = {
   };
   timing: { label: string; duration: number }[];
   serves: string[];
+  imageUrl: string;
 };
 
 export interface SendToPopup {

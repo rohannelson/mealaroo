@@ -34,15 +34,13 @@
       if (message.action === "sendToPopup") {
         ingredients = message.data.ingredients;
         method = message.data.method;
-        console.log("before notes set", notes);
         notes = message.data.notes;
-        console.log("notes set: ", notes);
         metadata = message.data.metadata;
       }
     }
   });
 
-  let tab = $state(2);
+  let tab = $state(0);
   const tabHeadings = ["Ingredients", "Method", "Notes", "Metadata"];
 </script>
 

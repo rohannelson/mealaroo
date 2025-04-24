@@ -10,8 +10,19 @@
 <div class="flex flex-col gap-1 mt-3">
   {#if metadata?.recipeName}
     <div class="flex flex-col justify-center gap-2 mb-2">
-      <h4 class="font-semibold">Name</h4>
-      <p>{metadata.recipeName}</p>
+      <div class="flex">
+        <div>
+          <h4 class="font-semibold">Name</h4>
+          <p>{metadata.recipeName}</p>
+        </div>
+        {#if metadata?.imageUrl && metadata.imageUrl.length > 0}
+          <img
+            src={metadata.imageUrl}
+            alt="recipe thumbnail"
+            class="ml-auto max-w-24 h-auto"
+          />
+        {/if}
+      </div>
     </div>
   {/if}
   {#if metadata?.description?.[0]}
