@@ -6,8 +6,8 @@ import { findTopicHeadings } from "./dom-queries/find-topic-headings";
 import { parseKeyNodes } from "./parsing/parse-key-nodes";
 import type { ParsedNode } from "./types";
 
-export default function parseIngredients(): ParsedNode[][] {
-  const topic = "ingredient";
+export default function parseNotes(): ParsedNode[][] {
+  const topic = "note";
   console.log(`Parsing ${topic}`);
 
   const topicHeadings = findTopicHeadings(topic);

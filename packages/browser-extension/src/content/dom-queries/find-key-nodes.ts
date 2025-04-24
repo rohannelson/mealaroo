@@ -19,7 +19,6 @@ function traverseNodes(node: Node, selectedNodes: Node[]) {
     const className = (node as HTMLElement).className;
 
     if (["HEADER", "FOOTER"].includes(tag)) {
-      console.log("keyNodes, skip header/footer");
       return;
     }
 
@@ -28,7 +27,6 @@ function traverseNodes(node: Node, selectedNodes: Node[]) {
         (term) => new RegExp(`\\b${term}\\b`).test(className),
       )
     ) {
-      //console.log("node filtered", node);
       return;
     }
 

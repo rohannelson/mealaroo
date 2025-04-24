@@ -29,7 +29,6 @@ export default function findChildElements(
     if (!subElements[0]) {
       return findSubElements(parent, headingInnerText);
     } else {
-      console.log("returning subElements", subElements);
       return subElements;
     }
   }
@@ -40,7 +39,6 @@ export default function findChildElements(
     headingInnerText: string,
   ): HTMLElement[] {
     for (let elementType of elementTypes) {
-      //console.log("querying element type", elementType);
       const subElements = elementType.all
         ? Array.from(parent.querySelectorAll(elementType.selector))
         : [parent.querySelector(elementType.selector)];

@@ -6,6 +6,7 @@ import findKeyNodes from "./dom-queries/find-key-nodes";
 import parseDescription from "./parse-description";
 import parseIngredients from "./parse-ingredients";
 import parseMethod from "./parse-method";
+import parseNotes from "./parse-notes";
 import parseRecipeName from "./parse-recipe-name";
 import parseServes from "./parse-serves";
 import parseSource from "./parse-source";
@@ -21,6 +22,7 @@ browser.runtime.onMessage.addListener((message): undefined => {
 
     const ingredients = parseIngredients();
     const method = parseMethod();
+    const notes = parseNotes();
     const recipeName = parseRecipeName();
     const description = parseDescription();
     const source = parseSource();
@@ -29,6 +31,7 @@ browser.runtime.onMessage.addListener((message): undefined => {
     const data: SendToPopup["data"] = {
       ingredients,
       method,
+      notes,
       metadata: { recipeName, description, source, timing, serves },
     };
     browser.runtime.sendMessage({

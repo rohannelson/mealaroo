@@ -11,14 +11,12 @@
   import MetadataTab from "./components/MetadataTab.svelte";
 
   async function handleClick() {
-    console.log("clicked");
     const activeTab = await browser.tabs.query({
       active: true,
       currentWindow: true,
     });
     const activeTabId = activeTab[0].id;
     if (activeTabId) {
-      console.log("activeTabId: ", activeTabId);
       browser.tabs
         .sendMessage(activeTabId, { action: "scrapeHTML", data: 0 })
         .catch((error) => {
@@ -29,19 +27,23 @@
 
   let ingredients: TopicData = $state();
   let method: TopicData = $state();
+  let notes: TopicData = $state();
   let metadata: Metadata | undefined = $state();
   browser.runtime.onMessage.addListener((message: unknown): undefined => {
     if (isType<SendToPopup>(message)) {
       if (message.action === "sendToPopup") {
         ingredients = message.data.ingredients;
         method = message.data.method;
+        console.log("before notes set", notes);
+        notes = message.data.notes;
+        console.log("notes set: ", notes);
         metadata = message.data.metadata;
       }
     }
   });
 
   let tab = $state(2);
-  const tabHeadings = ["Ingredients", "Method", "Metadata"];
+  const tabHeadings = ["Ingredients", "Method", "Notes", "Metadata"];
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -87,6 +89,8 @@
           {:else if tab === 1}
             <Topic data={method} />
           {:else if tab === 2}
+            <Topic data={notes} />
+          {:else if tab === 3}
             <MetadataTab {metadata} />
           {/if}
         </div>

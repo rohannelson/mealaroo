@@ -17,9 +17,7 @@ function findContainerNode(
   const parent = heading.parentElement;
   if (!parent || parent === document.documentElement) return undefined;
   if (parent.innerText === initialText) {
-    console.log("Recurring");
     return findContainerNode(parent, initialText);
   }
-  console.log("about to return parent:", parent.innerText);
   return parent;
 }

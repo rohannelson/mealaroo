@@ -23,6 +23,7 @@ export interface SendToPopup {
   data: {
     ingredients: ParsedNode[][];
     method: ParsedNode[][];
+    notes: ParsedNode[][];
     metadata: Metadata;
   };
 }

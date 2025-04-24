@@ -18,7 +18,6 @@ export default function parseMethod() {
   mergeAdjacentTextNodes(containerElements);
 
   const keyNodes = findKeyNodes(containerElements);
-  console.log("keyElements:", keyNodes);
 
   const parsedNodes = parseKeyNodes(keyNodes);
 

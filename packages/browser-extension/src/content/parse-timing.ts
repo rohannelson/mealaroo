@@ -52,11 +52,8 @@ function parseDuration(containerText: string) {
 
   const hoursMatch = containerText.trim().match(hoursRegex);
   const minsMatch = containerText.trim().match(minsRegex);
+
   // Extract hours and minutes, default to 0 if not found
-
-  console.log("hoursMatch", hoursMatch ?? "none found");
-  console.log("minsMatch", minsMatch ?? "none found");
-
   const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
   const minutes = minsMatch ? parseInt(minsMatch[1], 10) : 0;
 
