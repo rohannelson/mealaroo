@@ -1,7 +1,7 @@
 {
   "name": "browser-extension",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -24,6 +24,7 @@
     "webextension-polyfill": "^0.12.0"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
     "tailwindcss": "^4.0.0"
   }
 }
