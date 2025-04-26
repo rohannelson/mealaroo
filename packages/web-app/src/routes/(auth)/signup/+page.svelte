@@ -1,27 +1,42 @@
 <script>
   import { supabase } from '$lib/supabaseClient';
 
-    let email = '';
-    let password = '';
-    let errorMessage = '';
+    let email = $state('');
+    let password = $state('');
+    let signupMessage = $state('');
 
     async function signUp() {
-        const { error } = await supabase.auth.signUp({
+        const { error: signupError, data: signupData } = await supabase.auth.signUp({
             email,
             password
         });
 
-        if (error) {
-            errorMessage = error.message;
+        if (signupError) {
+            signupMessage = signupError.message;
+        } else if (!signupData.user) {
+            signupMessage = "signupData not found"
         } else {
-            errorMessage = 'Sign-up successful! Please check your email to confirm your account.';
+            // Create profile manually
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: signupData.user.id,
+        email: email, // or whatever other fields you want
+      });
+
+    if (profileError) {
+        signupMessage = 'Profile creation failed: ' + profileError.message;
+    } else {
+        signupMessage = 'Sign-up successful! Please check your email to confirm your account.';
+    }
+
         }
     }
 </script>
 
 <div class="flex justify-center items-center h-screen">
     <div class="w-full max-w-xs">
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" on:submit|preventDefault={signUp}>
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onsubmit={signUp}>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                     Email
@@ -39,8 +54,8 @@
                     Sign Up
                 </button>
             </div>
-            {#if errorMessage}
-                <p class="text-red-500 text-xs italic mt-4">{errorMessage}</p>
+            {#if signupMessage}
+                <p class="text-red-500 text-xs italic mt-4">{signupMessage}</p>
             {/if}
         </form>
     </div>
