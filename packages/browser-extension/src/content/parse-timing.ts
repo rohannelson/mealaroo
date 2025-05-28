@@ -24,7 +24,7 @@ export default function parseTiming(): Metadata["timing"] {
 
   const timingContainers = findContainerElements(timings);
 
-  //If you can't find any labels/containers, look directly for minutes / hour(s)
+  //TODO - If you can't find any labels/containers, look directly for minutes / hour(s)
 
   return (
     timings
