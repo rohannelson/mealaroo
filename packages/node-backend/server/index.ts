@@ -26,7 +26,7 @@ const appRouter = router({
       // Create a new user in the database
       const user = await db
         .insert(usersTable)
-        .values({ name: "Melissa", age: 34, email: "melissa@melissa.com" });
+        .values({ name: input.name, age: input.age, email: input.email });
       return user;
     }),
 });
