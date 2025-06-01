@@ -36,7 +36,10 @@ const server = createHTTPServer({
   router: appRouter,
 });
 
-server.listen(3000);
-console.log("tRPC server is running");
+const port = parseInt(process.env.PORT ?? "3000");
+const host = process.env.HOST ?? "0.0.0.0";
+
+server.listen(port, host);
+console.log(`tRPC server is running on http://${host}:${port}`);
 
 export type AppRouter = typeof appRouter;
