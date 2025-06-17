@@ -10,11 +10,11 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const families = pgTable("families", {
-  id: uuid().primaryKey().notNull(),
+  id: uuid().primaryKey().defaultRandom(),
 });
 
 export const accounts = pgTable("accounts", {
-  id: uuid().primaryKey().notNull(),
+  id: uuid().primaryKey().defaultRandom(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
   familyId: uuid()
@@ -23,7 +23,7 @@ export const accounts = pgTable("accounts", {
 });
 
 export const members = pgTable("members", {
-  id: serial().primaryKey().notNull(),
+  id: serial().primaryKey(),
   name: text(),
   familyId: uuid()
     .notNull()
