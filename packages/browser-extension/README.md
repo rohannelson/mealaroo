@@ -5,7 +5,7 @@ Succesfully parsing list of ingredients from one legit recipe site!
 # Testing
 
 pnpm build --watch
-web-ext run
+web-ext run (need to run from /dist)
 
 # Manual Dependencies
 

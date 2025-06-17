@@ -10,12 +10,15 @@ export type ParsedNode = {
 export type Metadata = {
   recipeName: string | undefined;
   description: string[];
+  descriptionTab: number;
   source: {
     label: string;
     href: string;
   };
   timing: { label: string; duration: number }[];
+  timingTab: number;
   serves: string[];
+  servesTab: number;
   imageUrl: string;
 };
 

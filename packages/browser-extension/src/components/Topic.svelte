@@ -2,8 +2,8 @@
   import type { TopicData } from "../types";
   import NavButtons from "./NavButtons.svelte";
 
-  let tab = $state(1);
-  let { data }: { data: TopicData } = $props();
+  
+  let { data, tab }: { data: TopicData, tab: number } = $props();
 </script>
 
 {#if data?.[0]}

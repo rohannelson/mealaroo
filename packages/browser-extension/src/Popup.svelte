@@ -26,8 +26,11 @@
   }
 
   let ingredients: TopicData = $state();
+  let ingredientsTab: number = $state(1);
   let method: TopicData = $state();
+  let methodTab: number = $state(1);
   let notes: TopicData = $state();
+  let notesTab: number = $state(1);
   let metadata: Metadata | undefined = $state();
   browser.runtime.onMessage.addListener((message: unknown): undefined => {
     if (isType<SendToPopup>(message)) {
@@ -83,11 +86,11 @@
             {/if}
           </div>
           {#if tab === 0}
-            <Topic data={ingredients} />
+            <Topic data={ingredients} tab={ingredientsTab}/>
           {:else if tab === 1}
-            <Topic data={method} />
+            <Topic data={method} tab={methodTab} />
           {:else if tab === 2}
-            <Topic data={notes} />
+            <Topic data={notes} tab={notesTab} />
           {:else if tab === 3}
             <MetadataTab {metadata} />
           {/if}
