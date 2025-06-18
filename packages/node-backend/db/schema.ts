@@ -8,6 +8,7 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 export const families = pgTable("families", {
   id: uuid().primaryKey().defaultRandom(),
@@ -31,7 +32,7 @@ export const members = pgTable("members", {
 });
 
 export const recipes = pgTable("recipes", {
-  id: uuid().primaryKey().notNull(),
+  id: uuid().primaryKey().defaultRandom(),
   familyId: uuid()
     .notNull()
     .references(() => families.id, { onDelete: "cascade" }),
@@ -51,6 +52,8 @@ export const recipes = pgTable("recipes", {
   updatedAt: timestamp().notNull().defaultNow(),
 });
 
+export const insertRecipesSchema = createInsertSchema(recipes);
+
 export const ingredients = pgTable("ingredients", {
   id: serial().primaryKey(),
   recipeId: uuid().references(() => recipes.id, { onDelete: "cascade" }),
@@ -60,6 +63,8 @@ export const ingredients = pgTable("ingredients", {
     .$default(() => false),
   rawIngredient: text().notNull(),
 });
+
+export const insertIngredientsSchema = createInsertSchema(ingredients);
 
 export const schema = {
   accounts,

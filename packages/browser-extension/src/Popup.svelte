@@ -1,6 +1,5 @@
 <script lang="ts">
   import browser from "webextension-polyfill";
-
   import { isType } from "./utils";
   import Topic from "./components/Topic.svelte";
   import type { TopicData } from "./types";
@@ -45,6 +44,10 @@
 
   let tab = $state(0);
   const tabHeadings = ["Ingredients", "Method", "Notes", "Metadata"];
+
+  function handleSubmit() {
+
+  }
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -82,6 +85,13 @@
                 >{tabHeadings[tab + 1]}<RightArrow
                   class="h-5 w-5 fill-primary-content"
                 /></button
+              >
+            {/if}
+            {#if tab === tabHeadings.length -1}
+                          <button
+                class="btn btn-accent btn-sm p-2 absolute right-0"
+                onclick={handleSubmit}
+                >Submit</button
               >
             {/if}
           </div>
