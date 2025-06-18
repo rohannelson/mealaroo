@@ -86,11 +86,11 @@
             {/if}
           </div>
           {#if tab === 0}
-            <Topic data={ingredients} tab={ingredientsTab}/>
+            <Topic data={ingredients} bind:tab={ingredientsTab}/>
           {:else if tab === 1}
-            <Topic data={method} tab={methodTab} />
+            <Topic data={method} bind:tab={methodTab} />
           {:else if tab === 2}
-            <Topic data={notes} tab={notesTab} />
+            <Topic data={notes} bind:tab={notesTab} />
           {:else if tab === 3}
             <MetadataTab {metadata} />
           {/if}

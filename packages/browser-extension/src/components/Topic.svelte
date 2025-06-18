@@ -3,7 +3,7 @@
   import NavButtons from "./NavButtons.svelte";
 
   
-  let { data, tab }: { data: TopicData, tab: number } = $props();
+  let { data, tab = $bindable() }: { data: TopicData, tab: number } = $props();
 </script>
 
 {#if data?.[0]}
