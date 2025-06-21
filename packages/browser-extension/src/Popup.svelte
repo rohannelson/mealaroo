@@ -47,21 +47,34 @@
   const tabHeadings = ["Ingredients", "Method", "Notes", "Metadata"];
 
   async function handleSubmit() {
-    if (ingredients && metadata) {
+    if (!ingredients || !metadata) {
+      console.log('Missing data')
+      return
+    }
+    try {
+      console.log('writing to db')
       const familyId = "8f6c274e-82d2-4a59-a3f6-6a9c73093f25";
       await trpc.recipeCreate.mutate({
         recipe: {
           familyId,
-          method: method?.[methodTab]?.join("\n"),
-          notes: notes?.[notesTab].join("\n") ?? "",
-          ...metadata,
-          description: metadata?.description[metadata.descriptionTab],
+          recipeName: metadata.recipeName,
+          description: metadata.description?.[metadata.descriptionTab],
+          totalTime: metadata.timing?.totalTime ?? null,
+          prepTime: metadata.timing?.prepTime ?? null,
+          cookTime: metadata.timing?.cookTime ?? null,
+          sourceLabel: metadata.source?.label,
+          sourceUrl: metadata.source?.href,
+          imageUrl: metadata?.imageUrl,
+          method: method?.[methodTab]?.join("\n") ?? "",
+          notes: notes?.[notesTab]?.join("\n") ?? "",
           serves: metadata.serves[metadata.servesTab],
         },
         ingredients: ingredients[ingredientsTab],
       });
+    } catch (error) {
+      console.error(error)
     }
-  }
+    }
 </script>
 
 <main class="p-5 flex flex-col gap-2">
@@ -104,7 +117,7 @@
             {#if tab === tabHeadings.length - 1}
               <button
                 class="btn btn-accent btn-sm p-2 absolute right-0"
-                onclick={handleSubmit}>Submit</button
+                onclick={async () => {await handleSubmit()}}>Submit</button
               >
             {/if}
           </div>
