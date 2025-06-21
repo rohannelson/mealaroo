@@ -1,4 +1,4 @@
-export default function parseRecipeName() {
+export default function parseRecipeName(): string {
   const headingNode = document.querySelector("h1");
-  return headingNode?.innerText;
+  return headingNode?.innerText ?? "";
 }

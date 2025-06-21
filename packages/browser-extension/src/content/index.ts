@@ -34,7 +34,17 @@ browser.runtime.onMessage.addListener((message): undefined => {
       ingredients,
       method,
       notes,
-      metadata: { recipeName, description, source, timing, serves, imageUrl },
+      metadata: {
+        recipeName,
+        description,
+        descriptionTab: 0,
+        source,
+        timing,
+        timingTab: 0,
+        serves,
+        servesTab: 0,
+        imageUrl,
+      },
     };
     browser.runtime.sendMessage({
       action: "sendToPopup",

@@ -8,6 +8,7 @@
   import LeftArrow from "./icons/LeftArrow.svelte";
   import RightArrow from "./icons/RightArrow.svelte";
   import MetadataTab from "./components/MetadataTab.svelte";
+  import { trpc } from "api";
 
   async function handleClick() {
     const activeTab = await browser.tabs.query({
@@ -45,8 +46,21 @@
   let tab = $state(0);
   const tabHeadings = ["Ingredients", "Method", "Notes", "Metadata"];
 
-  function handleSubmit() {
-
+  async function handleSubmit() {
+    if (ingredients && metadata) {
+      const familyId = "8f6c274e-82d2-4a59-a3f6-6a9c73093f25";
+      await trpc.recipeCreate.mutate({
+        recipe: {
+          familyId,
+          method: method?.[methodTab]?.join("\n"),
+          notes: notes?.[notesTab].join("\n") ?? "",
+          ...metadata,
+          description: metadata?.description[metadata.descriptionTab],
+          serves: metadata.serves[metadata.servesTab],
+        },
+        ingredients: ingredients[ingredientsTab],
+      });
+    }
   }
 </script>
 
@@ -87,16 +101,15 @@
                 /></button
               >
             {/if}
-            {#if tab === tabHeadings.length -1}
-                          <button
+            {#if tab === tabHeadings.length - 1}
+              <button
                 class="btn btn-accent btn-sm p-2 absolute right-0"
-                onclick={handleSubmit}
-                >Submit</button
+                onclick={handleSubmit}>Submit</button
               >
             {/if}
           </div>
           {#if tab === 0}
-            <Topic data={ingredients} bind:tab={ingredientsTab}/>
+            <Topic data={ingredients} bind:tab={ingredientsTab} />
           {:else if tab === 1}
             <Topic data={method} bind:tab={methodTab} />
           {:else if tab === 2}
