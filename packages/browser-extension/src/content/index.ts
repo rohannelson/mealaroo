@@ -40,7 +40,6 @@ browser.runtime.onMessage.addListener((message): undefined => {
         descriptionTab: 0,
         source,
         timing,
-        timingTab: 0,
         serves,
         servesTab: 0,
         imageUrl,

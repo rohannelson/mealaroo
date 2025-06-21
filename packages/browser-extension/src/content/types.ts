@@ -15,9 +15,7 @@ export type Metadata = {
     label: string;
     href: string;
   };
-  totalTime: string;
-  prepTime: string;
-  cookTime: string;
+  timing: { totalTime?: number; prepTime?: number; cookTime?: number };
   serves: string[];
   servesTab: number;
   imageUrl: string;

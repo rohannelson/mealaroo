@@ -48,14 +48,27 @@
       </p>
     </div>
   {/if}
-  {#if metadata?.timing}
-    <div class="flex flex-col justify-center gap-2 mb-2">
-      {#each metadata.timing as timing}
-        <h4 class="font-semibold">{timing.label}</h4>
-        <p>{timing.duration} min</p>
-      {/each}
-    </div>
-  {/if}
+{#if metadata?.timing}
+  <div class="flex flex-col justify-center gap-2 mb-2">
+
+    {#if metadata.timing.prepTime !== undefined}
+      <h4 class="font-semibold">Prep Time</h4>
+      <p>{metadata.timing.prepTime} min</p>
+    {/if}
+
+    {#if metadata.timing.cookTime !== undefined}
+      <h4 class="font-semibold">Cook Time</h4>
+      <p>{metadata.timing.cookTime} min</p>
+    {/if}
+
+    {#if metadata.timing.totalTime !== undefined}
+      <h4 class="font-semibold">Total Time</h4>
+      <p>{metadata.timing.totalTime} min</p>
+    {/if}
+
+  </div>
+{/if}
+
   {#if metadata?.serves?.[0]}
     <div class="flex flex-col justify-center gap-2 mb-2">
       <div class="grid grid-cols-3">
