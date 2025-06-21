@@ -32,6 +32,7 @@
   let notes: TopicData = $state();
   let notesTab: number = $state(1);
   let metadata: Metadata | undefined = $state();
+  let isLoading: boolean = $state(false);
   browser.runtime.onMessage.addListener((message: unknown): undefined => {
     if (isType<SendToPopup>(message)) {
       if (message.action === "sendToPopup") {
@@ -52,6 +53,7 @@
       return
     }
     try {
+      isLoading = true;
       console.log('writing to db')
       const familyId = "8f6c274e-82d2-4a59-a3f6-6a9c73093f25";
       await trpc.recipeCreate.mutate({
@@ -69,10 +71,12 @@
           notes: notes?.[notesTab]?.join("\n") ?? "",
           serves: metadata.serves[metadata.servesTab],
         },
-        ingredients: ingredients[ingredientsTab],
+        ingredients: ingredients[ingredientsTab - 1],
       });
+      isLoading = false
     } catch (error) {
       console.error(error)
+      isLoading = false
     }
     }
 </script>
@@ -117,7 +121,10 @@
             {#if tab === tabHeadings.length - 1}
               <button
                 class="btn btn-accent btn-sm p-2 absolute right-0"
-                onclick={async () => {await handleSubmit()}}>Submit</button
+                disabled={isLoading}
+                onclick={async () => {await handleSubmit()}}>
+                {#if isLoading} Submitting... {:else} Submit {/if}
+                </button
               >
             {/if}
           </div>
