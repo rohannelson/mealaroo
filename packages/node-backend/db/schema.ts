@@ -36,7 +36,7 @@ export const recipes = pgTable("recipes", {
   familyId: uuid()
     .notNull()
     .references(() => families.id, { onDelete: "cascade" }),
-  recipeName: text().notNull(),
+  recipeName: text(),
   description: text(),
   sourceLabel: text(),
   sourceUrl: text(),
